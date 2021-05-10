@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Boxes || Rampup</title>
+
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+
+<style>
+
+html,body {
+    height: 100%;
+}
+
+
+#container div{
+  position: absolute;
+  width: 130px;
+  border: 3px solid black;
+  padding: 10px;
+  /*margin: -30px;*/
+}
+
+#container div span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: pink;
+  /*border: 1px solid black;*/
+  padding: 32px;
+  margin: 17px;
+  padding-top: 12px;
+
+}
+
+#center {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#centerboxout{
+  position: relative;
+  width: 138px;
+  height: 138px;
+  border: 3px solid black;
+  padding: 10px;
+  margin: 10px;
+}
+
+#centerboxin{
+  position: absolute;
+  display: flex;
+  width: 70px;
+  height: 70px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  padding: 20px;
+  margin: 20px;
+
+}
+
+.top {
+  top: 0;
+}
+
+.right {
+  right: 0;
+}
+.bottom {
+  bottom: 0;
+
+}
+.left {
+  left: 0;
+
+}
+
+</style>
+
+
+<div id="center">
+    <div id="centerboxout">
+      <span id="centerboxin" onclick="colorchange(this.id)">
+      
+      </span>
+    </div>
+</div>
+
+
+
+<div id="container">
+
+
+  <div class="top left">
+    <span id="top-left" onclick="colorchange(this.id)"></span>
+  </div>
+  
+  
+
+  <div class="top right">
+    <span id="top-right" onclick="colorchange(this.id)"></span>
+  </div>
+  
+  
+
+  <div class="bottom left" id="bottom left">
+    <span id="bottom-left" onclick="colorchange(this.id)"></span>
+  </div>
+  
+  
+
+  <div class="bottom right" id="bottom right">
+    <span id="bottom-right" onclick="colorchange(this.id)"></span>
+  </div>
+  
+
+</div>
+
+
+<script type="text/javascript">
+ /*$('#centerboxin').on('click',function(){
+  $(this).css('backgroundColor','#B22222');
+    });*/
+   
+
+
+
+function colorchange(str)
+{
+ if(window.getComputedStyle(document.getElementById(str)).getPropertyValue("background-color")=='rgba(0, 0, 0, 0)')
+ {
+   document.getElementById(str).style.backgroundColor='#B22222';
+ }
+    $(document).ready(function () {
+        $('span').each(function () {
+            var i = $(this).attr('id');
+            {
+                var co= window.getComputedStyle(document.getElementById(i)).getPropertyValue("background-color");
+      
+                  const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1).map(n => parseInt(n, 10).toString(16).padStart(2, '0')).join('')}`
+
+                    var coly=rgb2hex(co);
+                    
+            if(coly=='#b22222')
+            {
+
+              var id=i;
+              var colour= window.getComputedStyle(document.getElementById(str)).getPropertyValue("background-color");
+            document.getElementById(str).style.backgroundColor='#B22222';
+            document.getElementById(id).style.backgroundColor=colour;
+            } 
+            
+        }
+            
+        });
+    });
+
+}
+
+
+</script>
+
+
+<script type="text/javascript">
+var pane = $('#centerboxout'),
+    box = $('#centerboxin'),
+    w = pane.width() - box.width()+1000,
+    d = {},
+    x = 3;
+
+function newv(v,a,b) {
+    var n = parseInt(v, 10) - (d[a] ? x : 0) + (d[b] ? x : 0);
+    return n < 0 ? 0 : n > w ? w : n;
+}
+
+$(window).keydown(function(e) { d[e.which] = true; });
+$(window).keyup(function(e) { d[e.which] = false; });
+
+setInterval(function() {
+    box.css({
+        left: function(i,v) { return newv(v, 37, 39); },
+        top: function(i,v) { return newv(v, 38, 40); }
+    });
+}, 20);
+</script>
+
+
+</body>
+</html>
