@@ -9,14 +9,13 @@ include_once('../admin/includes/comman_classes.php');
 $mysqlObj = new mysql_class();
 $helper   = new Helper_class();
 
-if($db_conn->connect_error){errorResponse("error in server");}
 
 $response = array();
 
 $post     = $helper->clearSlashes($_POST);
 
 if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') !=0){
-$helper->errorResponse("Request method must be POST!");}
+$helper->errorRequest("Request method must be POST!");}
 
 
 $survey_id      = $post['survey_id'];
@@ -38,7 +37,7 @@ $survey_id_existing  = $mysqlObj->existing_data('survey_id', 'survey', 'survey_i
 
 if ($survey_id_existing['survey_id']!=$survey_id) {
         $response["msg"]="This survey id is not valid";
-        $response["status"]= 0;
+        $response["status"]= 409;
         echo json_encode($response);exit;
 }
 
@@ -141,13 +140,13 @@ $insert2 = $mysqlObj->insertData("answeroptions",$value2);
 if($insert1==FALSE && $insert2==FALSE)
 {
         $response["msg"]="question is not inserted";
-        $response["status"]= 0;
+        $response["status"]= 204;
         echo json_encode($response);exit;
 } 
 
 
 $response["msg"]="Add question successfull!!";
-$response["status"]= 1;
+$response["status"]= 200;
 echo json_encode($response); 
 
 ?>

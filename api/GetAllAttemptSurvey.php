@@ -12,12 +12,12 @@ $helper   = new Helper_class();
 
 $response   = array();
 
-$post    	= $helper->clearSlashes($_POST);
+$get    	= $helper->clearSlashes($_GET);
 
-$access_key_received = $post['accesskey'];
+$access_key_received = $get['accesskey'];
 
-if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') !=0){
-$helper->errorResponse("Request method must be POST!");}
+if(strcasecmp($_SERVER['REQUEST_METHOD'], 'GET') !=0){
+$helper->errorRequest("Request method must be GET!");}
 
 
 if(!isset($access_key_received)) {$helper->errorResponse("access key is required !!");} 
@@ -46,7 +46,7 @@ $array = [
 $data[]= $array;
 }
 
-$response["status"]= 1;
+$response["status"]= 200;
 $response["data"]=  $data; 
 echo json_encode($response);    
 

@@ -26,17 +26,20 @@ if($access_key!=$access_key_received){$helper->errorResponse("access key is inco
 
 if(strcasecmp($_SERVER['REQUEST_METHOD'], 'GET') !=0){$helper->errorRequest("Request method must be GET!");}
 
-$sql = "select * from survey";
+$sql = "select S.*, Q.*, A.* from survey S INNER  JOIN question Q ON Q.survey_id = S.survey_id INNER  JOIN answeroptions A ON Q.question_id = A.question_id";
 $sqlQuery=$mysqlObj->mysqlQuery($sql);
 
 while($result = $sqlQuery->fetch(PDO::FETCH_ASSOC)){
 
 $array = [
-'survey_id'     => $result['survey_id'],
+'question_id'   => $result['question_id'],
 'name'        	=> $result['name'],
-'totalquestion' => $result['totalquestion'],
-'createdby'     => $result['createdby'],
-'createdon'     => $result['createdon']
+'question' 		=> $result['question'],
+'ans1'     		=> $result['ans1'],
+'ans2'     		=> $result['ans2'],
+'ans3'     		=> $result['ans3'],
+'ans4'     		=> $result['ans4'],
+'trueans'       => $result['trueans']
 ];
 
 $data[]= $array;
